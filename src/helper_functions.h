@@ -236,4 +236,8 @@ inline bool read_landmark_data(std::string filename, std::vector<LandmarkObs>& o
 	return true;
 }
 
+inline double bivariate_normal(double x, double y, double mu_x, double mu_y, double sig_x, double sig_y){
+  return exp(-((x-mu_x)*(x-mu_x)/(2.*sig_x*sig_x)+(y-mu_y)*(y-mu_y)/(2.*sig_y*sig_y)))/(2.*M_PI*sig_x*sig_y);
+}
+
 #endif /* HELPER_FUNCTIONS_H_ */

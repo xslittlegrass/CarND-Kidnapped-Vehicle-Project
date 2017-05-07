@@ -5,6 +5,8 @@
  *      Author: Tiffany Huang
  */
 
+#define DEBUG 0 // toggle debug output
+
 #include <iostream>
 #include <ctime>
 #include <iomanip>
@@ -77,9 +79,10 @@ int main() {
 	double total_error[3] = {0,0,0};
 	double cum_mean_error[3] = {0,0,0};
 
-
+#if DEBUG
   string out_file_name_ = "particle_position.txt";
   ofstream out_file_(out_file_name_.c_str(), ofstream::out);
+#endif
 
 	for (int i = 0; i < num_time_steps; ++i) {
     //for (int i = 0; i < 2; ++i) {
@@ -120,14 +123,14 @@ int main() {
 		// Update the weights and resample
 
 		pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
-		
 
-    // Debug, output particle position
+#if DEBUG
+    // Debug, output particle
     for (size_t k = 0; k < pf.particles.size(); ++k) {
       // output the estimation
       out_file_ << pf.particles[k].x << "\t" << pf.particles[k].y << "\t" << pf.particles[k].theta << "\t" << pf.particles[k].weight << endl;;
     }
-
+#endif
 
 		pf.resample();
 
